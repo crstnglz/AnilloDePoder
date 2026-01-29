@@ -18,6 +18,7 @@ export const routes: Routes = [
     { path: 'crearAnillo', component: CrearAnillo},
     { path: 'detallePersonajes', component: DetallePersonajes},
     { path: 'crearPersonaje', component: CrearPersonajes},
+    { path: 'editar/:id', component: CrearPersonajes},
     { path: 'buscarPersonaje', component: BuscarPersonaje},
     { path: 'padre', component: Padre}
 ];
