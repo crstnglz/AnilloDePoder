@@ -30,6 +30,10 @@ export class CrearPersonajes {
       Validators.required,
       Validators.minLength(3)
     ]),
+    fechaNacimiento: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
     corrupcion: new FormControl(50, [
       Validators.required,
       Validators.min(0),
