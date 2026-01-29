@@ -10,9 +10,9 @@ import { Observable } from 'rxjs';
 export class PersonajesService {
   constructor(private http: HttpClient){}
 
-  private baseUrl = environment.baseUrl
+  private baseUrl = environment.apiESDL
 
-  buscarPersonajes(): Observable <any []>
+  obtenerPersonajes(): Observable <any []>
   {
     return this.http.get<any []>(`${this.baseUrl}listaPersonajes`)
   }
