@@ -1,0 +1,18 @@
+import { Component } from '@angular/core';
+import { ConfirmarPopup } from '../confirmar-popup/confirmar-popup';
+import { ConfiguracionPopup } from '../../interfaces/configuracion-popup';
+
+@Component({
+  selector: 'app-padre',
+  imports: [ConfirmarPopup],
+  templateUrl: './padre.html',
+  styleUrl: './padre.css',
+})
+export class Padre {
+  parametrosModal: ConfiguracionPopup = {
+    message : "Buenas este es mi primer popup",
+    header : "Personaje",
+    nameButton: "Borrar",
+    severity: "danger"
+  }
+}
