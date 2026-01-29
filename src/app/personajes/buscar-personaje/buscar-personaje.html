@@ -28,7 +28,7 @@
                         <td>{{ item.raza }}</td>
                         <td>{{ item.fechaNacimiento }}</td>
                         <td>{{ item.nivelCorrupcion }}</td>
-                        <td><input type="button" value="Editar" id="btn-editar" (click)="editar(item.id)"></td>
+                        <td><button (click)="editar(item.id)">Editar</button></td>
                 </tr>
               } @empty {
                 <tr>
