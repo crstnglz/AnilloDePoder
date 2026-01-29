@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from "@angular/router";
 import { ButtonModule } from 'primeng/button';
@@ -6,6 +6,8 @@ import { InputText, InputTextModule } from "primeng/inputtext";
 import { SelectModule } from 'primeng/select';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SliderModule } from 'primeng/slider';
+import { PersonajesService } from '../../servicios/personajes-service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-crear-personajes',
@@ -13,7 +15,7 @@ import { SliderModule } from 'primeng/slider';
   templateUrl: './crear-personajes.html',
   styleUrl: './crear-personajes.css',
 })
-export class CrearPersonajes {
+export class CrearPersonajes implements OnInit {
   razaPersonajes = [
     { label: 'Elfo', value: 'Elfo' },
     { label: 'Enano', value: 'Enano' },
@@ -41,9 +43,36 @@ export class CrearPersonajes {
     ])
   })
 
+  modify = false
+  id?: number
+
+  constructor(
+    private personajeService: PersonajesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ){}
+
+  ngOnInit(): void
+  {
+    const idParam = this.route.snapshot.paramMap.get('id')
+    if(idParam)
+    {
+      this.id = Number(idParam)
+    }
+  }
+
   enviar()
   {
-    alert
+    if(this.formulario.invalid) return
+
+    if(this.modify && this.id)
+    {
+      this.personajeService.modificarPersonaje(this.id, this.formulario.value).subscribe(() => this.router.navigate(['/']))
+    }
+    else
+    {
+      this.personajeService.crearPersonaje(this.formulario.value).subscribe(() => this.router.navigate(['/']))
+    }
   }
 
   limpiar()

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { PersonajesService } from '../../servicios/personajes-service';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-buscar-personaje',
-  imports: [ButtonModule, FormsModule],
+  imports: [ButtonModule, FormsModule, RouterLink],
   templateUrl: './buscar-personaje.html',
   styleUrl: './buscar-personaje.css',
 })
@@ -36,5 +36,10 @@ export class BuscarPersonaje implements OnInit {
   editar(id: number)
   {
     this.router.navigate(['/editar', id])
+  }
+
+  anadir()
+  {
+    this.router.navigate(['/crearPersonaje'])
   }
 }
