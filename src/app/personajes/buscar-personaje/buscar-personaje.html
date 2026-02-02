@@ -8,7 +8,6 @@
     </table>
   </div>
 </div>
-
     <div>
         <table class="tabla">
             <thead>
@@ -20,24 +19,30 @@
                     <th>Editar</th>
                 </tr>
             </thead>
+
             <tbody>
-              @for (item of personajes; track item.id)
+              @if (personajes.length > 0)
+              {
+                @for (item of personajes; track item.id)
+                {
+                  <tr>
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.raza }}</td>
+                    <td>{{ item.fechaNacimiento }}</td>
+                    <td>{{ item.nivelCorrupcion }}</td>
+                    <td>
+                      <button (click)="editar(item.id)">Editar</button>
+                    </td>
+                  </tr>
+                }
+              }
+              @else
               {
                 <tr>
-                        <td>{{ item.nombre }}</td>
-                        <td>{{ item.raza }}</td>
-                        <td>{{ item.fechaNacimiento }}</td>
-                        <td>{{ item.nivelCorrupcion }}</td>
-                        <td><button (click)="editar(item.id)">Editar</button></td>
+                  <td colspan="5">No se encontraron personajes</td>
                 </tr>
-              } @empty {
-                <tr>
-                     <td colspan="5">No se encontraron personajes</td>
-                 </tr>
-                }
+              }
             </tbody>
 
-
         </table>
-
     </div>
