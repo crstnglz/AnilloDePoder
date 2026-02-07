@@ -4,5 +4,8 @@ export interface ConfiguracionPopup {
   message: string,
   header?: string,
   nameButton: string,
-  severity: ButtonSeverity
+  severity: 'success' | 'danger' | 'warning'
+  acceptLabel?: string
+  rejectLabel?: string
+  funcion: (MessageService?: any) => any
 }

@@ -13,6 +13,9 @@ export class Padre {
     message : "Buenas este es mi primer popup",
     header : "Personaje",
     nameButton: "Borrar",
-    severity: "danger"
+    severity: "danger",
+    acceptLabel: 'Aceptar',
+    rejectLabel: 'Canclear',
+    funcion: () => {}
   }
 }
