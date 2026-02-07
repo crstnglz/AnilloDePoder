@@ -17,6 +17,7 @@
                     <th>Fecha Nacimiento</th>
                     <th>Nivel de Corrupción</th>
                     <th>Editar</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
 
@@ -33,13 +34,23 @@
                     <td>
                       <button (click)="editar(item.id)">Editar</button>
                     </td>
+                    <td>
+                      @if (item.fechaBaja === null)
+                      {
+                        <app-confirmar-popup [config]="bajaLogica(item.id)"></app-confirmar-popup>
+
+                         <app-confirmar-popup [config]="bajaFisica(item.id)"></app-confirmar-popup>
+                      } @else {
+                         <app-confirmar-popup [config]="reactivar(item.id)"></app-confirmar-popup>
+                      }
+                    </td>
                   </tr>
                 }
               }
               @else
               {
                 <tr>
-                  <td colspan="5">No se encontraron personajes</td>
+                  <td colspan="6">No se encontraron personajes</td>
                 </tr>
               }
             </tbody>
