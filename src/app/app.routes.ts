@@ -8,6 +8,7 @@ import { BuscarPersonaje } from './personajes/buscar-personaje/buscar-personaje'
 import { CrearPersonajes } from './personajes/crear-personajes/crear-personajes';
 import { Padre } from './modales/padre/padre';
 import { DetallePersonajes } from './personajes/detalle-personajes/detalle-personajes';
+import { Juego } from './juego/juego';
 
 
 export const routes: Routes = [
@@ -20,5 +21,6 @@ export const routes: Routes = [
     { path: 'crearPersonaje', component: CrearPersonajes},
     { path: 'editar/:id', component: CrearPersonajes},
     { path: 'buscarPersonaje', component: BuscarPersonaje},
-    { path: 'padre', component: Padre}
+    { path: 'padre', component: Padre},
+    { path: 'juego', component: Juego}
 ];
