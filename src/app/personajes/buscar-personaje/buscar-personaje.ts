@@ -90,7 +90,7 @@ export class BuscarPersonaje implements OnInit {
       message: 'Se va a dar de baja el personaje ¿Estás seguro?',
       header: 'Baja lógica',
       nameButton: 'Baja Lógica',
-      severity: 'warning',
+      severity: 'danger',
       acceptLabel: 'Dar de baja',
       rejectLabel: 'Cancelar',
       funcion: () => {
