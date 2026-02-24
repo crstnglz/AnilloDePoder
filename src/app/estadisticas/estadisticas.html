@@ -1,0 +1,22 @@
+<div class="barraBusqueda">
+  <div class="acciones">
+    <table>
+      <tr>
+        <td><button routerLink="/juego" id="juego">Empezar Partida</button></td>
+        <td><button routerLink="/estadisticas" id="estadisticas">Estadísticas</button></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+<h2>Estadísticas</h2>
+
+<div class="stats">
+  <p>Partidas jugadas: {{ jugadas }}</p>
+  <p>Victorias: {{ victorias }}</p>
+  <p>Derrotas: {{ derrotas }}</p>
+</div>
+
+<button (click)="resetearEstadisticas()">Resetear estadísticas</button>
+

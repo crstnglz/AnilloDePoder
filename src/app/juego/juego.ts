@@ -20,14 +20,29 @@ export class Juego implements OnInit {
 
   ngOnInit(): void {
     const data = localStorage.getItem('partida')
-    if(data)
-    {
-      this.partidaActual = JSON.parse(data)
 
-      if(this.partidaActual && !this.partidaActual.acabada)
-      {
-        this.inicializarPreguntasDisponibles()
-      }
+    if(!data) return
+
+    this.partidaActual = JSON.parse(data)
+
+    if(!this.partidaActual || this.partidaActual.acabada) return
+
+    this.inicializarPreguntasDisponibles()
+
+    //se eliminan las que ya se han usado en "esa" partida
+    this.preguntasDisponibles = this.preguntasDisponibles.filter( id => !this.partidaActual!.preguntas.some(p => p.id === id))
+
+
+    //si había alguna sin responder, se carga de nuevo
+    const pendiente = this.partidaActual.preguntas.find(p => p.respuesta === null)
+
+    if(pendiente)
+    {
+      this.juegoService.obtenerPregunta(pendiente.id).subscribe((pregunta) => { this.preguntaActual = pregunta })
+    }
+    else
+    {
+      this.cargarPregunta()
     }
   }
 
@@ -69,7 +84,11 @@ export class Juego implements OnInit {
   cargarPregunta(): void
   {
     const id = this.obtenerPreguntaAleatoria()
-    if(!id) return
+    if(!id)
+    {
+      this.finalizar(false)
+      return
+    }
 
     this.juegoService.obtenerPregunta(id).subscribe((pregunta) => {
       this.preguntaActual = pregunta
@@ -83,7 +102,7 @@ export class Juego implements OnInit {
     if(!this.partidaActual || !this.preguntaActual) return
 
     this.juegoService
-      .validarRespuesta(this.partidaActual.id, opcion)
+      .validarRespuesta(this.preguntaActual.id, opcion)
       .subscribe((esCorrecta) => {
         const preguntaPendiente = this.partidaActual!.preguntas.find(p => p.respuesta === null)
 
@@ -122,10 +141,42 @@ export class Juego implements OnInit {
 
     this.partidaActual.acabada = true
     this.partidaActual.perdida = perdida
+    this.preguntaActual = null
 
     this.juegoService.finalizarPartida(this.partidaActual.id).subscribe(() => {
       this.guardarLocal()
     })
+
+    this.actualizarEstadisticas(perdida)
+  }
+
+  actualizarEstadisticas(perdida: boolean): void
+  {
+    const data = localStorage.getItem('estadisticas')
+
+    let stats = {
+      jugadas: 0,
+      victorias: 0,
+      derrotas: 0
+    }
+
+    if(data)
+    {
+      stats = JSON.parse(data)
+    }
+
+    stats.jugadas++
+
+    if(perdida)
+    {
+      stats.derrotas++
+    }
+    else
+    {
+      stats.victorias++
+    }
+
+    localStorage.setItem('estadisticas', JSON.stringify(stats))
   }
 
   guardarLocal(): void

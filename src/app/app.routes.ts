@@ -9,6 +9,7 @@ import { CrearPersonajes } from './personajes/crear-personajes/crear-personajes'
 import { Padre } from './modales/padre/padre';
 import { DetallePersonajes } from './personajes/detalle-personajes/detalle-personajes';
 import { Juego } from './juego/juego';
+import { Estadisticas } from './estadisticas/estadisticas';
 
 
 export const routes: Routes = [
@@ -22,5 +23,6 @@ export const routes: Routes = [
     { path: 'editar/:id', component: CrearPersonajes},
     { path: 'buscarPersonaje', component: BuscarPersonaje},
     { path: 'padre', component: Padre},
-    { path: 'juego', component: Juego}
+    { path: 'juego', component: Juego},
+    { path: 'estadisticas', component: Estadisticas}
 ];
