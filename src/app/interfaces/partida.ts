@@ -1,11 +1,26 @@
-export interface PartidaDTO {
+export interface PreguntaEstado
+{
+  id: number;
+  respuesta: number | null;
+}
+
+export interface Partida
+{
+  id: number;
+  preguntas: PreguntaEstado[];
+  numeroCorrectas: number;
+  acabada: boolean;
+  perdida: boolean;
+}
+
+export interface PartidaDTO
+{
   id: number;
   fechaInicio: string;
   fechaFin: string | null;
   numeroCorrectas: number;
   finPartida: boolean;
 }
-
 
 export interface Pregunta
 {
@@ -15,12 +30,4 @@ export interface Pregunta
   respuesta2: string;
   respuesta3: string;
   respuesta4: string;
-}
-
-export interface PartidaLocal
-{
-  id: number;
-  numeroCorrectas: number;
-  finParitida: boolean;
-  preguntasRespondidas: number[];
 }
