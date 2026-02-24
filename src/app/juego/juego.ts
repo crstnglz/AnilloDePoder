@@ -23,7 +23,7 @@ export class Juego implements OnInit {
     {
       this.partidaActual = JSON.parse(data)
 
-      if(!this.partidaActual?.acabada === false)
+      if(this.partidaActual && !this.partidaActual.acabada)
       {
         this.inicializarPreguntasDisponibles()
         this.cargarPregunta()
@@ -50,7 +50,7 @@ export class Juego implements OnInit {
 
   inicializarPreguntasDisponibles(): void
   {
-    this.preguntasDisponibles = Array.from({ length: this.TOTAL_PREGUNTAS}, (_, i) => 1 + 1)
+    this.preguntasDisponibles = Array.from({ length: this.TOTAL_PREGUNTAS}, (_, i) => i + 1)
   }
 
   obtenerPreguntaAleatoria(): number | null
@@ -59,6 +59,8 @@ export class Juego implements OnInit {
 
     const indice = Math.floor(Math.random() * this.preguntasDisponibles.length)
     const id = this.preguntasDisponibles[indice]
+
+    this.preguntasDisponibles.splice(indice, 1)
 
     return id
   }
@@ -77,10 +79,10 @@ export class Juego implements OnInit {
 
   responder(opcion: number): void
   {
-    if(!this.partidaActual || !this.partidaActual) return
+    if(!this.partidaActual || !this.preguntaActual) return
 
     this.juegoService
-      .validarRespuesta(this.partidaActual.id, opcion)
+      .validarRespuesta(this.partidaActual!.id, opcion)
       .subscribe((esCorrecta) => {
         const preguntaPendiente = this.partidaActual!.preguntas.find(p => p.respuesta === null)
 
