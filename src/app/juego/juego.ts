@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { JuegoService } from '../servicios/juego-service';
 import { Partida, PartidaDTO, Pregunta } from '../interfaces/partida';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-juego',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './juego.html',
   styleUrl: './juego.css',
 })
@@ -26,7 +27,6 @@ export class Juego implements OnInit {
       if(this.partidaActual && !this.partidaActual.acabada)
       {
         this.inicializarPreguntasDisponibles()
-        this.cargarPregunta()
       }
     }
   }
@@ -43,6 +43,7 @@ export class Juego implements OnInit {
       }
 
       this.inicializarPreguntasDisponibles()
+      this.preguntaActual = null
       this.guardarLocal()
       this.cargarPregunta()
     })
@@ -82,7 +83,7 @@ export class Juego implements OnInit {
     if(!this.partidaActual || !this.preguntaActual) return
 
     this.juegoService
-      .validarRespuesta(this.partidaActual!.id, opcion)
+      .validarRespuesta(this.partidaActual.id, opcion)
       .subscribe((esCorrecta) => {
         const preguntaPendiente = this.partidaActual!.preguntas.find(p => p.respuesta === null)
 
@@ -90,29 +91,28 @@ export class Juego implements OnInit {
 
         preguntaPendiente.respuesta = opcion
 
-        if(esCorrecta)
-        {
-          this.juegoService
-            .marcarCorrecta(this.partidaActual!.id)
-            .subscribe((dto: PartidaDTO) => {
-              this.partidaActual!.numeroCorrectas = dto.numeroCorrectas
-
-              if(dto.numeroCorrectas === 5)
-              {
-                this.finalizar(false)
-              }
-              else
-              {
-                this.cargarPregunta()
-              }
-
-              this.guardarLocal()
-            })
-        }
-        else
+        if(!esCorrecta)
         {
           this.finalizar(true)
+          return
         }
+
+        this.juegoService
+          .marcarCorrecta(this.partidaActual!.id)
+          .subscribe((dto: PartidaDTO) => {
+            this.partidaActual!.numeroCorrectas = dto.numeroCorrectas
+
+            if(dto.numeroCorrectas === 5)
+            {
+              this.finalizar(false)
+            }
+            else
+            {
+              this.cargarPregunta()
+            }
+
+            this.guardarLocal()
+          })
       })
   }
 
@@ -137,6 +137,6 @@ export class Juego implements OnInit {
   {
     localStorage.removeItem('partida')
     this.partidaActual = null
-    this.partidaActual = null
+    this.preguntaActual = null
   }
 }

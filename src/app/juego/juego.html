@@ -1,9 +1,20 @@
+<div class="barraBusqueda">
+  <div class="acciones">
+    <table>
+      <tr>
+        <td><button (click)="resetear()" id="juego">Empezar Partida</button></td>
+        <td><button routerLink="" id="">Estadísticas</button></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
 <div class="juego-container">
   @if (!partidaActual)
   {
     <div class="card">
       <h2>¡Bienvenid@ al Trivial!</h2>
-      <button (click)="iniciarNuevaPartida()">Empezar Partida</button>
+      <button (click)="iniciarNuevaPartida()">Jugar</button>
     </div>
   }
 
