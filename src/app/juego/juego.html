@@ -1,1 +1,41 @@
-<p>juego works!</p>
+<div class="juego-container">
+  @if (!partidaActual)
+  {
+    <div class="card">
+      <h2>¡Bienvenid@ al Trivial!</h2>
+      <button (click)="iniciarNuevaPartida()">Empezar Partida</button>
+    </div>
+  }
+
+  @else if (partidaActual && !partidaActual.acabada && preguntaActual)
+  {
+    <div class="card">
+      <h3>{{ preguntaActual.pregunta }}</h3>
+
+      <button (click)="responder(1)">{{ preguntaActual.respuesta1 }}</button>
+      <button (click)="responder(2)">{{ preguntaActual.respuesta2 }}</button>
+      <button (click)="responder(3)">{{ preguntaActual.respuesta3 }}</button>
+      <button (click)="responder(4)">{{ preguntaActual.respuesta4 }}</button>
+
+      <p>Aciertos: {{ partidaActual.numeroCorrectas }}</p>
+    </div>
+  }
+
+  @else if (partidaActual && partidaActual.acabada)
+  {
+    <div class="card">
+      <h2>Partida Finalizada</h2>
+
+      @if (partidaActual.numeroCorrectas === 5)
+      {
+        <p style="color: green;">¡Has ganado!</p>
+      } @else {
+        <p style="color: red">Has perdido</p>
+      }
+
+      <p>Aciertos: {{ partidaActual.numeroCorrectas }}</p>
+
+      <button (click)="resetear()">Jugar otra vez</button>
+    </div>
+  }
+</div>
